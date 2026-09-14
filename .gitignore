@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.idea/
+.vscode/
+logs/
+data/input/*.csv
+!data/input/.gitkeep
+.ruff_cache

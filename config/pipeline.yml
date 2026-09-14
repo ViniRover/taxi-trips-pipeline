@@ -1,0 +1,8 @@
+pipeline:
+  input_dir: /opt/pipeline/data/input
+  source:
+    base_url: https://d37ci6vzurychx.cloudfront.net/trip-data
+    taxi_type: yellow
+    max_lookback_months: 12
+  table:
+    name: yellow_taxi_trips
