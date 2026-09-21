@@ -11,6 +11,7 @@ RUN pip install --no-cache-dir \
     apache-airflow==2.10.5 \
     apache-airflow-providers-apache-spark==5.1.1 \
     pyspark==3.5.5 \
+    psycopg2-binary==2.9.10 \
     && airflow version \
     && spark-submit --version
 

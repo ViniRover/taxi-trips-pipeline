@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS silver.yellow_taxi_trips (
     total_amount DECIMAL(10,2),
     congestion_surcharge DECIMAL(10,2),
     airport_fee DECIMAL(10,2),
-    cbd_congestion_fee DECIMAL(10,2)
+    cbd_congestion_fee DECIMAL(10,2),
 
     has_valid_fare BOOLEAN,
     has_valid_duration BOOLEAN,

@@ -63,7 +63,7 @@ def download_parquet(base_url: str, taxi_type: str, input_dir: str, max_lookback
             partial.replace(target)
             return str(target)
         except HTTPError as error:
-            if error.code != 404:
+            if error.code not in  (404, 403):
                 raise
         finally:
             partial.unlink(missing_ok=True)

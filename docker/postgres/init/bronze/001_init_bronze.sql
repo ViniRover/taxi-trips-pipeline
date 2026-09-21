@@ -21,7 +21,12 @@ CREATE TABLE IF NOT EXISTS bronze.yellow_taxi_trips (
     total_amount VARCHAR(50),
     congestion_surcharge VARCHAR(50),
     airport_fee VARCHAR(50),
-    cbd_congestion_fee VARCHAR(50)
+    cbd_congestion_fee VARCHAR(50),
+    request_source VARCHAR(50)
 );
 
 CREATE INDEX IF NOT EXISTS idx_bronze_ingestion_timestamp ON bronze.yellow_taxi_trips(ingestion_timestamp);
+
+CREATE INDEX IF NOT EXISTS idx_bronze_source_file ON bronze.yellow_taxi_trips(source_file);
+
+\ir 002_row_deduplication.sql

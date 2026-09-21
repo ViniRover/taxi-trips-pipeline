@@ -7,6 +7,7 @@ from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
 
 from etl.common import PostgresConfig, create_spark, jdbc_write
+from etl.bronze.ingestion import RowIngestion
 
 COLUMN_NAMES = {
     "VendorID": "vendor_id",
@@ -40,13 +41,28 @@ def main() -> None:
     if not input_file.is_file():
         raise FileNotFoundError(f"Input file not found: {input_file}")
 
-    spark = create_spark(f"bronze_{args.table}")
-    try:
-        source = spark.read.parquet(str(input_file))
-        bronze = canonicalize(source, input_file.name)
-        jdbc_write(bronze, PostgresConfig(), f"bronze.{args.table}", mode="append")
-    finally:
-        spark.stop()
+    pg = PostgresConfig()
+    with RowIngestion(pg, args.table) as ingestion:
+        columns = ingestion.create_stage()
+        spark = create_spark(f"bronze_{args.table}")
+        try:
+            source = canonicalize(spark.read.parquet(str(input_file)), input_file.name)
+            unknown = set(source.columns) - set(columns) - {"source_file"}
+            if unknown:
+                raise ValueError(f"Source columns missing from bronze DDL: {sorted(unknown)}")
+            
+            bronze = source.select(
+                F.col("source_file"),
+                *[
+                    (F.col(name) if name in source.columns else F.lit(None)).cast("string").alias(name)
+                    for name in columns
+                ],
+            )
+            jdbc_write(bronze, pg, ingestion.stage_table, mode="append")
+            row_count = ingestion.publish()
+            print(f"Completed {input_file.name}: {row_count} new rows inserted; existing rows skipped")
+        finally:
+            spark.stop()
 
 
 if __name__ == "__main__":
