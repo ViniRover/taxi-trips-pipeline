@@ -36,11 +36,21 @@ def create_spark(app_name: str) -> SparkSession:
         .getOrCreate()
     )
 
-def jdbc_read(spark: SparkSession, pg: PostgresConfig, table: str = None, query: str = None) -> DataFrame:
-    if query:
-        spark.read.format("jdbc").options(**pg.options).option("query", query).load()
+def jdbc_read(
+    spark: SparkSession,
+    pg: PostgresConfig,
+    table: str = None,
+    query: str = None,
+    fetch_size: int = 1000,
+) -> DataFrame:
+    if fetch_size <= 0:
+        raise ValueError("JDBC fetch size must be greater than zero")
 
-    return spark.read.format("jdbc").options(**pg.options).option("dbtable", table).load()
+    reader = spark.read.format("jdbc").options(**pg.options).option("fetchsize", str(fetch_size))
+    if query:
+        return reader.option("query", query).load()
+
+    return reader.option("dbtable", table).load()
 
 def jdbc_write(df: DataFrame, pg: PostgresConfig, table: str, mode: str, truncate: bool = False) -> None:
     writer = df.write.format("jdbc").options(**pg.options).option("dbtable", table).mode(mode)

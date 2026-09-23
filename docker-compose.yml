@@ -75,7 +75,7 @@ services:
     restart: "no"
 
   spark-master:
-    image: apache/spark:3.5.5
+    image: apache/spark:4.0.0
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
     environment:
       SPARK_NO_DAEMONIZE: "true"
@@ -87,7 +87,7 @@ services:
     restart: unless-stopped
 
   spark-worker:
-    image: apache/spark:3.5.5
+    image: apache/spark:4.0.0
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     environment:
       SPARK_NO_DAEMONIZE: "true"

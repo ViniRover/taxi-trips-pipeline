@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS silver.yellow_taxi_trips (
     trip_id BIGSERIAL PRIMARY KEY,
 
-    bronze_ingestion_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    bronze_ingestion_timestamp TIMESTAMP,
     silver_ingestion_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     source_file VARCHAR(255) NOT NULL,
 
@@ -31,8 +31,9 @@ CREATE TABLE IF NOT EXISTS silver.yellow_taxi_trips (
 
     has_valid_fare BOOLEAN,
     has_valid_duration BOOLEAN,
+    has_valid_speed BOOLEAN,
 
-    trip_duration_minutes INTEGER,
+    trip_duration_minutes DECIMAL(10,2),
     trip_speed_mph DECIMAL(5,2)
 );
 
@@ -40,4 +41,4 @@ CREATE INDEX IF NOT EXISTS idx_silver_pickup_datetime ON silver.yellow_taxi_trip
 CREATE INDEX IF NOT EXISTS idx_silver_dropoff_datetime ON silver.yellow_taxi_trips(tpep_dropoff_datetime);
 CREATE INDEX IF NOT EXISTS idx_silver_vendor_id ON silver.yellow_taxi_trips(vendor_id);
 CREATE INDEX IF NOT EXISTS idx_silver_payment_type ON silver.yellow_taxi_trips(payment_type);
-CREATE INDEX IF NOT EXISTS idx_silver_valid_trips ON silver.yellow_taxi_trips(has_valid_fare, has_valid_duration);
+CREATE INDEX IF NOT EXISTS idx_silver_valid_trips ON silver.yellow_taxi_trips(has_valid_fare, has_valid_duration, has_valid_speed);

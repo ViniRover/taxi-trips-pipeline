@@ -123,7 +123,9 @@ with DAG(
         jars=JDBC_JAR,
         application_args=[
             "--table",
-            TABLE["name"]
+            TABLE["name"],
+            "--fetch-size",
+            str(CONFIG["silver"]["jdbc_fetch_size"]),
         ],
         conf=spark_conf,
         env_vars={"PYTHONPATH": PYTHON_PATH},
