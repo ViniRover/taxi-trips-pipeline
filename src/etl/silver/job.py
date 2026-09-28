@@ -34,7 +34,6 @@ parse_key_type = {
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Limpa e deduplica uma tabela bronze na camada silver.")
     parser.add_argument("--table", required=True)
-    parser.add_argument("--deduplicate-by", nargs="*", default=[])
     parser.add_argument("--fetch-size", type=int, default=1000, help="Rows fetched per JDBC round trip.")
     return parser.parse_args()
 
@@ -56,7 +55,7 @@ def existing_dedup_keys(df: DataFrame, candidates: list[str]) -> list[str]:
         raise ValueError(f"Deduplication columns not found in bronze table: {missing}")
     return candidates
 
-def current_month_bronze_trips_query(table_name: str):
+def current_month_bronze_trips_query(table_name: str) -> str:
     query = f"""
         SELECT * FROM {table_name}
         WHERE ingestion_timestamp >= DATE_TRUNC('month', NOW())

@@ -6,5 +6,4 @@ pipeline:
     max_lookback_months: 12
   table:
     name: yellow_taxi_trips
-  silver:
     jdbc_fetch_size: 1000

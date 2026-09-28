@@ -125,12 +125,27 @@ with DAG(
             "--table",
             TABLE["name"],
             "--fetch-size",
-            str(CONFIG["silver"]["jdbc_fetch_size"]),
+            str(CONFIG["table"]["jdbc_fetch_size"]),
         ],
         conf=spark_conf,
         env_vars={"PYTHONPATH": PYTHON_PATH},
         verbose=False,
     )
-    complete = EmptyOperator(task_id="silver_complete")
+    gold = SparkSubmitOperator(
+        task_id="gold_yellow_taxi_trips",
+        application="/opt/pipeline/src/etl/gold/job.py",
+        conn_id="spark_default",
+        jars=JDBC_JAR,
+        application_args=[
+            "--table",
+            TABLE["name"],
+            "--fetch-size",
+            str(CONFIG["table"]["jdbc_fetch_size"]),
+        ],
+        conf=spark_conf,
+        env_vars={"PYTHONPATH": PYTHON_PATH},
+        verbose=False,
+    )
+    complete = EmptyOperator(task_id="complete")
 
-    start >> download >> bronze >> silver >> complete
+    start >> download >> bronze >> silver >> gold >> complete
