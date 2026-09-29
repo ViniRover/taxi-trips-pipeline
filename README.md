@@ -74,7 +74,7 @@ The DAG is currently triggered manually. This project demonstrates ingestion, or
 
 </br>
 
-# ▶️ Como executar
+# ▶️ How to run
 
 ## 1. Clone repository
 
@@ -113,14 +113,14 @@ Create a file `.env` containing
 ## 5. Access Airflow
 
 ```
-  http://localhost:8080
+  http://localhost:8080/login
 ```
 
 </br>
 
-# 📄 Licença
+# 📄 License
 
-Este projeto está licenciado sob a licença MIT.
+This project is licensed under the MIT License.
 
-Sinta-se à vontade para utilizá-lo para fins de estudo.
+Feel free to use it for educational purposes.
 
