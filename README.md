@@ -8,6 +8,8 @@ The DAG is currently triggered manually. This project demonstrates ingestion, or
 
 # 🏗️ Architecture
 
+![alt text](https://github.com/ViniRover/taxi-trips-pipeline/blob/master/img/pipeline-diagram.png)
+
 # 🛠️ Technologies
 
 | Technology | Purpose |
@@ -61,6 +63,8 @@ The DAG is currently triggered manually. This project demonstrates ingestion, or
   └── requirements-dev.txt
 ```
 
+> [!NOTE]
+> The file structure may change during the development of the project.
 
 # ▶️ Como executar
 
@@ -103,3 +107,10 @@ Create a file `.env` containing
 ```
   http://localhost:8080
 ```
+
+# 📄 Licença
+
+Este projeto está licenciado sob a licença MIT.
+
+Sinta-se à vontade para utilizá-lo para fins de estudo.
+
