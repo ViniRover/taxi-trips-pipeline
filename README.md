@@ -6,9 +6,13 @@ The pipeline downloads a monthly Parquet file from NYC TLC and loads its records
 
 The DAG is currently triggered manually. This project demonstrates ingestion, orchestration, row-level deduplication, data cleaning, and analytical aggregation.
 
+</br>
+
 # 🏗️ Architecture
 
 ![alt text](https://github.com/ViniRover/taxi-trips-pipeline/blob/master/img/pipeline-diagram.png)
+
+</br>
 
 # 🛠️ Technologies
 
@@ -20,7 +24,9 @@ The DAG is currently triggered manually. This project demonstrates ingestion, or
 | PostgreSQL | Database |
 | Docker Compose | Manage multi-container application |
 
-# 📂 Estrutura do Projeto
+</br>
+
+# 📂 Project Structure
 
 ```base
   .
@@ -66,6 +72,8 @@ The DAG is currently triggered manually. This project demonstrates ingestion, or
 > [!NOTE]
 > The file structure may change during the development of the project.
 
+</br>
+
 # ▶️ Como executar
 
 ## 1. Clone repository
@@ -107,6 +115,8 @@ Create a file `.env` containing
 ```
   http://localhost:8080
 ```
+
+</br>
 
 # 📄 Licença
 
