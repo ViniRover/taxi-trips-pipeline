@@ -157,14 +157,14 @@ def main() -> None:
    daily_summary_trip_df = jdbc_read(spark, pg, query=daily_trip_summary_query, fetch_size=args.fetch_size)
    vendor_performance_df = jdbc_read(spark, pg, query=vendor_performance_query, fetch_size=args.fetch_size)
 
-   jdbc_write(daily_summary_trip_df, pg, "gold.daily_trip_summary", mode="errorifexists")
-   jdbc_write(vendor_performance_df, pg, "gold.vendor_performance", mode="errorifexists")
+   jdbc_write(daily_summary_trip_df, pg, "gold.daily_trip_summary", mode="overwrite")
+   jdbc_write(vendor_performance_df, pg, "gold.vendor_performance", mode="overwrite")
 
    # Just performing another way to aggregate with Spark and not SQL queries
    silver_df = jdbc_read(spark, pg, table=silver_table_name, fetch_size=args.fetch_size)
    payment_type_analysis_df = create_payment_type_analysis(silver_df)
 
-   jdbc_write(payment_type_analysis_df, pg, "gold.payment_type_analysis", mode="errorifexists")
+   jdbc_write(payment_type_analysis_df, pg, "gold.payment_type_analysis", mode="overwrite")
 
 if __name__ == "__main__":
    main()
